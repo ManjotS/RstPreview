@@ -51,10 +51,12 @@ class RstpreviewCommand(TextCommand):
         html = rst_to_html(text)
         TEMP_DIR = tempfile.gettempdir()
         if self.view.file_name():
-            preview_filename = hashlib.md5(self.view.file_name()).hexdigest() + ".html"
+            preview_filename = "sublime-rstpreview-" + hashlib.md5(self.view.file_name()).hexdigest() + ".html"
+            thedir, thefile = os.path.split(self.view.file_name())
+            file_path = os.path.join(thedir, preview_filename)
         else:
             preview_filename = 'rst_preview.html'
-        file_path = os.path.join(TEMP_DIR, preview_filename)
+            file_path = os.path.join(TEMP_DIR, preview_filename)
         with open(file_path, 'wb') as f:
             f.write(html)
 
